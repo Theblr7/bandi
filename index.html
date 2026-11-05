@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BANDI Family Tree</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff8ec;--card:#fffdf8;--tx:#2b1a12;--mu:#7a6050;--ln:#d9b97a;--ac:#8b1e2d;--gd:#e0a526;--hd:#8b1e2d;--ancbg:#fbf1d9}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1210;--card:#2a1b18;--tx:#f5e9d8;--mu:#c4a88e;--ln:#7a5a30;--hd:#f0c36a;--ancbg:#33261a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d1210;--card:#2a1b18;--tx:#f5e9d8;--mu:#c4a88e;--ln:#7a5a30;--hd:#f0c36a;--ancbg:#33261a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,var(--ac),#5c1020);border-bottom:3px solid var(--gd);color:#fff;flex-wrap:wrap}
+.tor{height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='16'%3E%3Cpath d='M0 0h26L13 16z' fill='%232e7d32'/%3E%3Cpath d='M6 0h14L13 10z' fill='%23e0a526'/%3E%3C/svg%3E") repeat-x}
+.hero{text-align:center;padding:12px 16px 4px;color:var(--mu);font-size:13px}.hero b{display:block;color:var(--hd);font-size:17px;letter-spacing:1px}
+header img{height:40px;border-radius:6px}
+header h1{margin:0;font-size:22px;letter-spacing:2px}
+header small{display:block;opacity:.85}
+header .sp{flex:1}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:var(--card);color:var(--tx);border:1px solid var(--ln);border-radius:8px;padding:7px 12px;cursor:pointer}
+button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+button.d{color:#c0392b}
+header button{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.4)}
+#bar{padding:8px 16px;display:none;gap:8px;flex-wrap:wrap;background:var(--card);border-bottom:1px solid var(--ln)}
+#wrap{overflow-x:auto;padding:20px 12px 40px}
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree{display:flex;justify-content:center;min-width:max-content;margin:auto}
+.tree ul{display:flex;justify-content:center;padding-top:20px;position:relative}
+.tree li{position:relative;padding:20px 6px 0;text-align:center;display:flex;flex-direction:column;align-items:center}
+.tree>li{padding-top:0}
+.tree li:before,.tree li:after{content:"";position:absolute;top:0;right:50%;width:50%;height:20px;border-top:2px solid var(--ln)}
+.tree li:after{right:auto;left:50%;border-left:2px solid var(--ln)}
+.tree li:only-child:before,.tree li:only-child:after{display:none}
+.tree li:only-child{padding-top:0}
+.tree>li:before,.tree>li:after{display:none}
+.tree li:first-child:before,.tree li:last-child:after{border:0}
+.tree li:last-child:before{border-right:2px solid var(--ln);border-radius:0 8px 0 0}
+.tree li:first-child:after{border-radius:8px 0 0 0}
+.tree ul:before{content:"";position:absolute;top:0;left:50%;border-left:2px solid var(--ln);height:20px}
+.c{width:124px;background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:8px 6px;cursor:pointer;box-shadow:0 1px 3px #0002}
+.c:hover{border-color:var(--ac)}
+.av{width:56px;height:56px;border-radius:50%;margin:0 auto 4px;border:2px solid var(--gd);background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;object-fit:cover;overflow:hidden}
+.c b{display:block;font-size:13px;word-break:break-word}
+.c small{color:var(--mu);font-size:11px;display:block}
+.anc{border-style:dashed;background:var(--ancbg)}
+dialog{border:1px solid var(--ln);border-radius:14px;background:var(--card);color:var(--tx);width:min(440px,94vw);max-height:90vh;padding:16px}
+dialog::backdrop{background:#0007}
+label{display:block;margin:8px 0 2px;color:var(--mu);font-size:13px}
+input:not([type=checkbox]):not([type=color]),select,textarea{width:100%;padding:7px;border:1px solid var(--ln);border-radius:8px;background:var(--bg)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.big{width:110px;height:110px;font-size:44px;margin:0 auto 8px}
+dl{margin:8px 0}dt{color:var(--mu);font-size:12px;margin-top:8px}dd{margin:0}
+.ck{display:flex;align-items:center;gap:8px;margin-top:10px}
+footer{text-align:center;color:var(--mu);font-size:12px;padding:12px}
+</style></head><body>
+<header><img id="logo" alt="" hidden><div><h1 id="ttl"></h1><small id="tag"></small><small>బండి వంశ వృక్షం</small></div><span class="sp"></span><button id="lg">Admin login</button></header><div class="tor"></div>
+<div class="hero"><b>🪔 బండి వంశం · రెడ్డి (పెదకంటి) 🪔</b>Honouring our roots: the Reddis ruled coastal Andhra from 1325 to 1448 CE. Pedakanti is one of the recognised Reddy sub-divisions of the Telugu land.</div>
+<div id="bar"><button class="p" id="add">+ Add member</button><button id="st">Settings</button><button id="ex">Export backup</button><button id="im">Import</button><button id="lo">Logout</button><input type="file" id="imf" accept=".json" hidden></div>
+<div id="wrap"><ul class="tree" id="tree"></ul></div>
+<footer>Tap a member to see details</footer>
+
+<dialog id="dv"></dialog>
+<dialog id="de"></dialog>
+<dialog id="dl"><form method="dialog" id="lf"><h3 style="margin:0 0 6px">Admin login</h3><label>User name</label><input id="u" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><p id="er" style="color:#c0392b;margin:6px 0 0"></p><div class="row"><button class="p" id="go" type="button">Login</button><button value="x">Cancel</button></div></form></dialog>
+
+<script>
+const K='bandi_tree_v1',$=id=>document.getElementById(id);
+const seed={s:{title:'BANDI',tag:'Reddy · Pedakanti Family Tree',ac:'#8b1e2d',logo:''},m:[
+{id:'a1',name:'Ancestor (edit me)',birth:'1900',death:'',parent:'',spouse:'',likes:'',notes:'',photo:'',anc:true}]};
+let D=load(),admin=false,editId=null,tmpPhoto='';
+function load(){try{const s=localStorage.getItem(K);if(s){const j=JSON.parse(s);if(j.s.ac==='#2f7d4f')j.s.ac='#8b1e2d';if(j.s.tag==='Family Tree')j.s.tag='Reddy · Pedakanti Family Tree';return j}}catch(e){}return JSON.parse(JSON.stringify(seed))}
+function save(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){alert('Storage is full. Export a backup and use smaller photos.')}}
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const byId=id=>D.m.find(m=>m.id===id);
+const kids=id=>D.m.filter(m=>m.parent===id);
+function fmt(d){if(!d)return'';const t=new Date(d);return isNaN(t)||!/^\d{4}-\d\d-\d\d$/.test(d)?d:t.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}
+function birthTxt(m){return m.anc?'Approx. '+(m.birth||'not available'):fmt(m.birth)}
+function deathTxt(m){return m.anc?(m.death?'Approx. '+m.death:'Not available'):fmt(m.death)}
+function short(m){const b=m.anc?'c. '+(m.birth||'?'):(m.birth?m.birth.slice(0,4):'');const d=m.anc?(m.death?m.death:'N/A'):(m.death?m.death.slice(0,4):'');return b?(d?b+' – '+d:b):''}
+function av(m,cls){return m.photo?`<img class="av ${cls||''}" src="${m.photo}" alt="">`:`<div class="av ${cls||''}">${esc((m.name||'?')[0])}</div>`}
+function node(m){const k=kids(m.id);return`<li><div class="c ${m.anc?'anc':''}" data-id="${m.id}">${av(m)}<b>${esc(m.name)}</b><small>${esc(short(m))}</small></div>${k.length?'<ul>'+k.map(node).join('')+'</ul>':''}</li>`}
+function render(){
+ const s=D.s;document.documentElement.style.setProperty('--ac',s.ac||'#8b1e2d');
+ $('ttl').textContent=s.title;$('tag').textContent=s.tag;document.title=s.title+' '+(s.tag||'');
+ $('logo').hidden=!s.logo;if(s.logo)$('logo').src=s.logo;
+ const roots=D.m.filter(m=>!m.parent||!byId(m.parent));
+ $('tree').innerHTML=roots.map(node).join('')||'<p>No members yet.</p>';
+ $('bar').style.display=admin?'flex':'none';$('lg').style.display=admin?'none':'';
+}
+$('tree').onclick=e=>{const c=e.target.closest('.c');if(c)view(c.dataset.id)};
+function view(id){const m=byId(id),p=byId(m.parent),d=$('dv');
+ const row=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
+ d.innerHTML=`<div style="text-align:center">${av(m,'big')}<h3 style="margin:0">${esc(m.name)}</h3>${m.anc?'<small style="color:var(--mu)">Ancestor</small>':''}</div><dl>
+ ${row('Born',birthTxt(m))}${m.anc||m.death?row('Died',deathTxt(m)):''}${row('Parent',p&&p.name)}${row('Spouse',m.spouse)}${row('Gotram',m.gotram)}${row('Native village',m.village)}${row('Likes',m.likes)}${row('Notes',m.notes)}</dl>
+ <div class="row">${admin?`<button class="p" data-a="e">Edit</button><button data-a="c">+ Child</button><button data-a="s">+ Spouse</button><button class="d" data-a="x">Delete</button>`:''}<button data-a="z">Close</button></div>`;
+ d.onclick=e=>{const a=e.target.dataset.a;if(!a)return;
+  if(a==='z')d.close();
+  if(a==='e'){d.close();edit(id)}
+  if(a==='c'){d.close();edit(null,id)}
+  if(a==='s'){d.close();edit(null,'',{spouseOf:id})}
+  if(a==='x'&&confirm('Delete '+m.name+'? Their children will move up one level.')){D.m.forEach(x=>{if(x.parent===id)x.parent=m.parent});D.m=D.m.filter(x=>x.id!==id);save();d.close();render()}};
+ d.showModal()}
+function edit(id,par,opts={}){editId=id;const spouseOf=opts.spouseOf||null;const m=id?byId(id):{name:'',birth:'',death:'',parent:par||'',spouse:spouseOf?((byId(spouseOf)||{}).name||''):'' ,gotram:'',village:'',likes:'',notes:'',photo:'',anc:false};tmpPhoto=m.photo;
+ const optsHtml='<option value="">— None (top of tree) —</option>'+D.m.filter(x=>x.id!==id).map(x=>`<option value="${x.id}" ${x.id===m.parent?'selected':''}>${esc(x.name)}</option>`).join('');
+ const d=$('de');d.innerHTML=`<h3 style="margin:0">${spouseOf?'Add spouse':(id?'Edit':'Add')} member</h3>
+ <label>Photo (any image up to 5 MB, converted automatically)</label><input type="file" id="ph" accept="image/*,.heic,.heif,.avif,.webp,.bmp,.tif,.tiff"><div id="pv" style="margin-top:6px">${tmpPhoto?`<img src="${tmpPhoto}" style="height:60px;border-radius:8px">`:''}</div>
+ <label>Name</label><input id="fn" value="${esc(m.name)}">
+ <label class="ck"><input type="checkbox" id="fa" ${m.anc?'checked':''}> Ancestor (approximate dates, death not available)</label>
+ <label id="lb">Birth date</label><input id="fb" value="${esc(m.birth)}">
+ <label>Death date (leave empty if living)</label><input id="fd" value="${esc(m.death)}">
+ <label>Parent</label><select id="fp">${optsHtml}</select>
+ <label>Spouse</label><input id="fs" value="${esc(m.spouse)}">
+ <label>Gotram</label><input id="fg" value="${esc(m.gotram)}">
+ <label>Native village</label><input id="fv" value="${esc(m.village)}">
+ <label>Likes</label><input id="fl" value="${esc(m.likes)}" placeholder="Cricket, music, cooking…">
+ <label>Notes</label><textarea id="fnote" rows="3">${esc(m.notes)}</textarea>
+ <div class="row"><button class="p" id="sv">Save</button><button id="cn">Cancel</button></div>`;
+ const setT=()=>{const a=$('fa').checked;$('fb').type=a?'text':'date';$('fd').type=a?'text':'date';$('lb').textContent=a?'Approx. birth (e.g. 1890)':'Birth date';if(a)$('fb').placeholder='1890 or leave empty'};
+ const bv=m.birth,dv=m.death;setT();$('fb').value=bv;$('fd').value=dv;
+ $('fa').onchange=()=>{$('fb').value='';$('fd').value='';setT()};
+ $('ph').onchange=e=>{const f=e.target.files[0];if(!f)return;
+  if(f.size>5*1024*1024){e.target.value='';return alert('This photo is larger than 5 MB. Please choose a smaller one.')}
+  resize(f,400,.78).then(u=>{tmpPhoto=u;$('pv').innerHTML=`<img src="${u}" style="height:60px;border-radius:8px">`}).catch(()=>{e.target.value='';alert('This format can\u2019t be read by your browser (HEIC works on iPhone/Safari only). Please pick a JPG, PNG or WebP.')})};
+ $('cn').onclick=()=>d.close();
+ $('sv').onclick=()=>{const n=$('fn').value.trim();if(!n)return alert('Name is required');
+  const o={id:id||'m'+Date.now().toString(36),name:n,anc:$('fa').checked,birth:$('fb').value,death:$('fd').value,parent:$('fp').value,spouse:$('fs').value,gotram:$('fg').value,village:$('fv').value,likes:$('fl').value,notes:$('fnote').value,photo:tmpPhoto};
+  if(id)Object.assign(byId(id),o);else D.m.push(o);
+  if(spouseOf){const cur=byId(spouseOf);if(cur){cur.spouse = n; if(!o.parent) o.parent=''; if(o.spouse.trim()!==cur.name) o.spouse=cur.name;}}
+  save();d.close();render()};
+ d.showModal()}
+function resize(f,max,q,t){t=t||'image/jpeg';return new Promise((r,j)=>{const i=new Image,u=URL.createObjectURL(f);i.onerror=()=>{URL.revokeObjectURL(u);j()};i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);const x=c.getContext('2d');if(t==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}x.drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL(t,q))};i.src=u})}
+$('lg').onclick=()=>{$('er').textContent='';$('dl').showModal()};
+$('go').onclick=()=>{if($('u').value.trim()==='blr009'&&$('pw').value==='blr009'){admin=true;$('pw').value='';$('dl').close();render()}else $('er').textContent='Wrong user name or password'};
+$('pw').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('go').click()}};
+$('lo').onclick=()=>{admin=false;render()};
+$('add').onclick=()=>edit(null);
+$('ex').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='bandi-family-tree.json';a.click()};
+$('im').onclick=()=>$('imf').click();
+$('imf').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const j=JSON.parse(t);if(!j.m||!j.s)throw 0;D=j;save();render()}catch(x){alert('Invalid backup file')}})};
+$('st').onclick=()=>{const s=D.s,d=$('de');d.innerHTML=`<h3 style="margin:0">Site settings</h3>
+ <label>Family name</label><input id="s1" value="${esc(s.title)}"><label>Tagline</label><input id="s2" value="${esc(s.tag)}">
+ <label>Theme colour</label><input type="color" id="s3" value="${s.ac}"><label>Logo (optional)</label><input type="file" id="s4" accept="image/*">
+ <div class="row"><button class="p" id="s5">Save</button><button id="s6">Remove logo</button><button id="s7">Cancel</button></div>`;
+ let lg=s.logo;$('s4').onchange=e=>{const f=e.target.files[0];if(f){if(f.size>5*1024*1024)return alert('Logo is larger than 5 MB.');resize(f,240,.9,'image/png').then(u=>lg=u).catch(()=>alert('Could not read this image.'))}};
+ $('s6').onclick=()=>{lg=''};$('s7').onclick=()=>d.close();
+ $('s5').onclick=()=>{D.s={title:$('s1').value||'BANDI',tag:$('s2').value,ac:$('s3').value,logo:lg};save();d.close();render()};d.showModal()};
+render();
+</script></body></html>
