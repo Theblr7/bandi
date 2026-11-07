@@ -11,7 +11,7 @@ Lightweight, responsive family tree. Single file: `index.html`.
    https://YOUR-USERNAME.github.io/bandi-family-tree/
 
 ## Admin
-Tap **Admin login**. User name: blr009, Password: blr009.
+Tap **Admin login**. User name: blr009, Password: ******.
 To change them, open `index.html`, search for `blr009` and edit it.
 
 ## Notes
