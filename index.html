@@ -63,13 +63,18 @@ footer{text-align:center;color:var(--mu);font-size:12px;padding:12px}
 <dialog id="de"></dialog>
 <dialog id="dl"><form method="dialog" id="lf"><h3 style="margin:0 0 6px">Admin login</h3><label>User name</label><input id="u" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><p id="er" style="color:#c0392b;margin:6px 0 0"></p><div class="row"><button class="p" id="go" type="button">Login</button><button value="x">Cancel</button></div></form></dialog>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
 const K='bandi_tree_v1',$=id=>document.getElementById(id);
 const seed={s:{title:'BANDI',tag:'Reddy · Pedakanti Family Tree',ac:'#8b1e2d',logo:''},m:[
 {id:'a1',name:'Ancestor (edit me)',birth:'1900',death:'',parent:'',spouse:'',likes:'',notes:'',photo:'',anc:true}]};
-let D=load(),admin=false,editId=null,tmpPhoto='';
+let D=load(),admin=false,editId=null,tmpPhoto='',db=null,dbReady=false;
+const dbConfigured=()=>window.supabase&&window.BANDI_SUPABASE_URL&&window.BANDI_SUPABASE_ANON_KEY&&!window.BANDI_SUPABASE_URL.includes('YOUR-PROJECT')&&!window.BANDI_SUPABASE_ANON_KEY.includes('YOUR-');
+if(dbConfigured())db=window.supabase.createClient(window.BANDI_SUPABASE_URL,window.BANDI_SUPABASE_ANON_KEY);
 function load(){try{const s=localStorage.getItem(K);if(s){const j=JSON.parse(s);if(j.s.ac==='#2f7d4f')j.s.ac='#8b1e2d';if(j.s.tag==='Family Tree')j.s.tag='Reddy · Pedakanti Family Tree';return j}}catch(e){}return JSON.parse(JSON.stringify(seed))}
-function save(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){alert('Storage is full. Export a backup and use smaller photos.')}}
+function save(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){alert('Storage is full. Export a backup and use smaller photos.')}if(db&&dbReady&&admin)syncSave()}
+async function syncSave(){const{error}=await db.from('bandi_site_state').upsert({id:1,data:D,updated_at:new Date().toISOString()});if(error)alert('Could not save shared data: '+error.message)}
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const byId=id=>D.m.find(m=>m.id===id);
 const kids=id=>D.m.filter(m=>m.parent===id);
@@ -130,7 +135,7 @@ function edit(id,par,opts={}){editId=id;const spouseOf=opts.spouseOf||null;const
  d.showModal()}
 function resize(f,max,q,t){t=t||'image/jpeg';return new Promise((r,j)=>{const i=new Image,u=URL.createObjectURL(f);i.onerror=()=>{URL.revokeObjectURL(u);j()};i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);const x=c.getContext('2d');if(t==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}x.drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL(t,q))};i.src=u})}
 $('lg').onclick=()=>{$('er').textContent='';$('dl').showModal()};
-$('go').onclick=()=>{if($('u').value.trim()==='blr009'&&$('pw').value==='blr009'){admin=true;$('pw').value='';$('dl').close();render()}else $('er').textContent='Wrong user name or password'};
+$('go').onclick=async()=>{if(!db){$('er').textContent='Database is not configured. Ask the site owner to finish Supabase setup.';return}const{data,error}=await db.auth.signInWithPassword({email:$('u').value.trim(),password:$('pw').value});if(error){$('er').textContent=error.message;return}const{data:membership,error:memberError}=await db.from('bandi_admins').select('user_id').eq('user_id',data.user.id).maybeSingle();if(memberError||!membership){await db.auth.signOut();$('er').textContent='This account is not an approved site admin.';return}admin=true;$('pw').value='';$('dl').close();render();if(!dbReady){const{data:row,error:loadError}=await db.from('bandi_site_state').select('data').eq('id',1).maybeSingle();if(loadError){$('er').textContent='Could not load shared data: '+loadError.message;return}if(row?.data){D=row.data;try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}render()}else await syncSave();dbReady=true};};
 $('pw').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('go').click()}};
 $('lo').onclick=()=>{admin=false;render()};
 $('add').onclick=()=>edit(null);
@@ -144,5 +149,6 @@ $('st').onclick=()=>{const s=D.s,d=$('de');d.innerHTML=`<h3 style="margin:0">Sit
  let lg=s.logo;$('s4').onchange=e=>{const f=e.target.files[0];if(f){if(f.size>5*1024*1024)return alert('Logo is larger than 5 MB.');resize(f,240,.9,'image/png').then(u=>lg=u).catch(()=>alert('Could not read this image.'))}};
  $('s6').onclick=()=>{lg=''};$('s7').onclick=()=>d.close();
  $('s5').onclick=()=>{D.s={title:$('s1').value||'BANDI',tag:$('s2').value,ac:$('s3').value,logo:lg};save();d.close();render()};d.showModal()};
-render();
+async function init(){if(db){const{data:row,error}=await db.from('bandi_site_state').select('data').eq('id',1).maybeSingle();if(!error&&row?.data){D=row.data;try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}}}dbReady=true;render()}
+init();
 </script></body></html>
